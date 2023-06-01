@@ -3,13 +3,11 @@
 import logging
 import os
 
-from swc_slack.utils import (
-    get_client,
-    get_reaction_users,
-    get_reactions,
-    join_channel,
+from swc_slack.messaging.read import get_message_emoji_respondents
+from swc_slack.messaging.write import (
     send_message_to_user,
 )
+from swc_slack.utils import get_client
 
 logging.basicConfig(level=logging.INFO)
 
@@ -37,20 +35,10 @@ message = (
     "If it looks weird, please let me know!"
 )
 client = get_client(slack_token)
-join_channel(client, channel_id)
-reactions = get_reactions(client, channel_id, text, limit=200)
-user_list, username_list, email_list = get_reaction_users(
-    client, reactions, reaction_name
+user_list, username_list, email_list = get_message_emoji_respondents(
+    client, channel_id, text, reaction_name
 )
-
 print(f"{len(user_list)} users responded with: {reaction_name}")
 print("Sending test message to test user...")
 send_message_to_user(client, test_user_id, message)
-word = input("Please type 'continue' to message all users: ")
-if word == "continue":
-    print("Continuing...")
-    for user_id in user_list:
-        print(f"Messaging: {user_id}")
-        # send_message_to_user(client, user_id, message)
-else:
-    print("Word is not correct, aborting...")
+# safe_send_message_to_users(client, user_list, message)
