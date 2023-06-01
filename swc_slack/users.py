@@ -1,20 +1,12 @@
 from typing import List, Tuple
 
 from slack_sdk import WebClient
-from slack_sdk.errors import SlackApiError
 
 
-def get_users(client: WebClient) -> None:
-    try:
-        response = client.users_list()
-        if response["ok"]:
-            users = response["members"]
-            for user in users:
-                print(user["name"])
-        else:
-            print(f"Error: {response['error']}")
-    except SlackApiError as e:
-        print(f"Error: {e.response['error']}")
+def get_users(client: WebClient) -> List[dict]:
+    response = client.users_list()
+    users = response["members"]
+    return users
 
 
 def get_user_info(client: WebClient, user_id: str) -> Tuple[str, str]:
@@ -40,3 +32,18 @@ def get_reaction_users(
                 username_list.append(user_name)
                 email_list.append(user_email)
     return user_list, username_list, email_list
+
+
+def get_ids_of_specific_users_by_email(
+    client: WebClient, emails: List[str]
+) -> List[str]:
+    all_users = get_users(client)
+    users = []
+    for user in all_users:
+        for email in emails:
+            try:
+                if email in user["profile"]["email"]:
+                    users.append(user["id"])
+            except KeyError:
+                pass
+    return users
