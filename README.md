@@ -44,7 +44,7 @@ user_list, _, _ = get_message_emoji_respondents(
 )
 ```
 
-Messsage a specific user
+Message a specific user
 
 ```python
 from swc_slack.messaging.write import send_message_to_user
