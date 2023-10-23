@@ -3,10 +3,10 @@ from typing import List
 from slack_sdk import WebClient
 
 
-def send_message_to_user(client: WebClient, user_id: str, message: str):
+def send_message_to_user(client: WebClient, user_id: str, message: str, unfurl_links: bool = False):
     response = client.conversations_open(users=user_id)
     channel = response["channel"]["id"]
-    client.chat_postMessage(channel=channel, text=message)
+    client.chat_postMessage(channel=channel, text=message, unfurl_links=unfurl_links)
 
 
 def safe_send_message_to_users(
@@ -15,7 +15,7 @@ def safe_send_message_to_users(
     message: str,
     password: str = "continue",
 ):
-    word = input(f"Please type '{password} to message all users: ")
+    word = input(f"Please type '{password}' to message all users: ")
     if word == password:
         print("Continuing...")
         for user_id in user_list:
