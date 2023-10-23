@@ -3,10 +3,14 @@ from typing import List
 from slack_sdk import WebClient
 
 
-def send_message_to_user(client: WebClient, user_id: str, message: str, unfurl_links: bool = False):
+def send_message_to_user(
+    client: WebClient, user_id: str, message: str, unfurl_links: bool = False
+):
     response = client.conversations_open(users=user_id)
     channel = response["channel"]["id"]
-    client.chat_postMessage(channel=channel, text=message, unfurl_links=unfurl_links)
+    client.chat_postMessage(
+        channel=channel, text=message, unfurl_links=unfurl_links
+    )
 
 
 def safe_send_message_to_users(
