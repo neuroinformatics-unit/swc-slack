@@ -3,7 +3,7 @@ name = "swc-slack"
 authors = [{name = "Adam Tyson", email= "code@adamltyson.com"}]
 description = "Tools to interface with slack"
 readme = "README.md"
-requires-python = ">=3.8.0"
+requires-python = ">=3.11.0"
 dynamic = ["version"]
 
 dependencies = [
@@ -16,9 +16,9 @@ classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Operating System :: OS Independent",
     "License :: OSI Approved :: BSD License",
 ]
@@ -64,7 +64,7 @@ exclude = ["tests", "docs*"]
 addopts = "--cov=swc_slack"
 
 [tool.black]
-target-version = ['py38', 'py39', 'py310']
+target-version = ['py311', 'py312', 'py313']
 skip-string-normalization = false
 line-length = 79
 
@@ -87,9 +87,3 @@ line-length = 79
 exclude = ["__init__.py","build",".eggs"]
 select = ["I", "E", "F"]
 fix = true
-
-[tool.cibuildwheel]
-build = "cp38-* cp39-* cp310-*"
-
-[tool.cibuildwheel.macos]
-archs = ["x86_64", "arm64"]
